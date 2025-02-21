@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:sfPopup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup"
+             xmlns:local="clr-namespace:SfDataGridSample"
+             x:Class="SfDataGridSample.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:EmployeeViewModel x:Name="viewModel" />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <syncfusion:SfDataGrid x:Name="sfGrid"
+                               GridLinesVisibility="Both"
+                               HeaderGridLinesVisibility="Both"
+                               ColumnWidthMode="Auto"
+                               SelectionMode="Single"
+                               NavigationMode="Cell"
+                               AutoGenerateColumnsMode="None"
+                               CellTapped="sfGrid_CellTapped"
+                               ItemsSource="{Binding Employees}">
+
+            <syncfusion:SfDataGrid.Columns>
+                <syncfusion:DataGridNumericColumn MappingName="EmployeeID"
+                                                  Format="#"
+                                                  HeaderText="Employee ID" />
+                <syncfusion:DataGridTextColumn MappingName="Name"
+                                               HeaderText="Employee Name" />
+                <syncfusion:DataGridTextColumn MappingName="Title"
+                                               HeaderText="Designation" />
+                <syncfusion:DataGridDateColumn MappingName="HireDate"
+                                               HeaderText="Hire Date" />
+
+            </syncfusion:SfDataGrid.Columns>
+
+        </syncfusion:SfDataGrid>
+
+        <!-- Syncfusion SfPopup -->
+        <sfPopup:SfPopup x:Name="popup"
+                         WidthRequest="400"
+                         HeightRequest="250"
+                         ShowFooter="True"
+                         ShowHeader="True"
+                         StaysOpen="False"
+                         IsOpen="{Binding IsPopupOpen, Mode=TwoWay}"
+                         >
+
+            <sfPopup:SfPopup.HeaderTemplate>
+                <DataTemplate>
+                    <Label Text="Employee Details" HorizontalOptions="Center"
+                           FontSize="18"
+                           FontAttributes="Bold" />
+                </DataTemplate>
+            </sfPopup:SfPopup.HeaderTemplate>
+
+            <sfPopup:SfPopup.ContentTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout Padding="10">
+                        <Label 
+                               Text="{Binding SelectedEmployeeDetails}"
+                               FontSize="16"
+                               TextColor="Black" />
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </sfPopup:SfPopup.ContentTemplate>
+
+            <sfPopup:SfPopup.FooterTemplate>
+                <DataTemplate>
+                    <Button Text="Close" WidthRequest="100" HeightRequest="40" 
+                            Clicked="ClosePopup" />
+                </DataTemplate>
+            </sfPopup:SfPopup.FooterTemplate>
+
+        </sfPopup:SfPopup>
+    </Grid>
+</ContentPage>
